@@ -32,7 +32,47 @@ public class AnalyticsCounter {
 
 	static Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms) {
 		Map<String, Integer> sortedSymptoms = new HashMap<String, Integer>();
-		Set<String> keySet = new TreeSet<String>();
+
+		Comparator<String> compareString = new Comparator<String>() {
+			@Override
+			public int compare(String word1, String word2) {
+				if (word1.length() == 0 || word2.length() == 0)
+					return 1;
+
+				int char11 = word1.toCharArray()[0];
+				int char12 = 0;
+
+				if (word1.length() > 1)
+					char12 = word1.toCharArray()[1];
+
+				int char21 = word2.toCharArray()[0];
+				int char22 = 0;
+
+				if (word2.length() > 1)
+					char22 = word2.toCharArray()[1];
+
+				System.out.print("\n\nword 1 : " + word1 + "\nword 2 : " + word2 + "\n\nchar 11 : " + char11
+						+ "\nchar 12 : " + char12 + "\n\nchar 21 : " + char21 + "\nchar 22 : " + char22 + "\n");
+
+				if (char11 > char21) {
+					System.out.print("\n" + char11 + " > " + char21 + " return 1");
+					return 1;
+				} else if (char11 < char21) {
+					System.out.print("\n" + char11 + " < " + char21 + " return -1");
+					return -1;
+				} else {
+					if (char12 < char22) {
+						System.out.print("\n" + char12 + " < " + char22 + " return 1");
+						return -1;
+					} else {
+						System.out.print("\n" + char12 + " >= " + char22 + " return 1");
+						return -1;
+					}
+				}
+			}
+		};
+
+		Set<String> keySet = new TreeSet<String>(compareString);
 
 		// puts symptoms in TreeSet so they are sorted
 		for (String symptom : symptoms.keySet())
