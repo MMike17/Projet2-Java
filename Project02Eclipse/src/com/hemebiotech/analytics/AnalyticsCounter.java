@@ -10,7 +10,8 @@ public class AnalyticsCounter {
 		Map<String, Integer> countedSymptoms = countSymptoms(reader);
 		reader.close();
 
-		writeFile(countedSymptoms);
+		Map<String, Integer> sortedSymptoms = sortSymptoms(countedSymptoms);
+		writeFile(sortedSymptoms);
 	}
 
 	static Map<String, Integer> countSymptoms(BufferedReader reader) {
@@ -27,6 +28,21 @@ public class AnalyticsCounter {
 		}
 
 		return symptoms;
+	}
+
+	static Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms) {
+		Map<String, Integer> sortedSymptoms = new HashMap<String, Integer>();
+		Set<String> keySet = new TreeSet<String>();
+
+		// puts symptoms in TreeSet so they are sorted
+		for (String symptom : symptoms.keySet())
+			keySet.add(symptom);
+
+		// feeds sorted symptoms back into HashMap
+		for (String key : keySet)
+			sortedSymptoms.put(key, symptoms.get(key));
+
+		return sortedSymptoms;
 	}
 
 	static void writeFile(Map<String, Integer> symptoms) throws IOException {
