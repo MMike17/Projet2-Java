@@ -1,38 +1,40 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
+import java.util.*;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0; // initialize to 0
-	private static int rashCount = 0; // initialize to 0
-	private static int pupilCount = 0; // initialize to 0
-
 	public static void main(String args[]) throws Exception {
 		// first get input
 		BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
-		String line = reader.readLine();
-
-		while (line != null) {
-			if (line.equals("headache")) {
-				headacheCount++;
-			} else if (line.equals("rash")) {
-				rashCount++;
-			} else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine(); // get another symptom
-		}
-
+		Map<String, Integer> countedSymptoms = countSymptoms(reader);
 		reader.close();
 
-		// next generate output
+		writeFile(countedSymptoms);
+	}
+
+	static Map<String, Integer> countSymptoms(BufferedReader reader) {
+		Map<String, Integer> symptoms = new HashMap<String, Integer>();
+		Object[] fileContent = reader.lines().toArray();
+
+		for (Object symptom : fileContent) {
+			String castSymptom = (String) symptom;
+
+			if (symptoms.containsKey(castSymptom))
+				symptoms.put(castSymptom, symptoms.get(castSymptom) + 1);
+			else
+				symptoms.put(castSymptom, 1);
+		}
+
+		return symptoms;
+	}
+
+	static void writeFile(Map<String, Integer> symptoms) throws IOException {
 		FileWriter writer = new FileWriter("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
+
+		for (String key : symptoms.keySet())
+			writer.write(key + " : " + symptoms.get(key) + "\n");
+
 		writer.close();
 	}
 }
