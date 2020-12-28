@@ -23,22 +23,28 @@ public class SimpleSymptomReader implements ISymptomsReader
 
 	@Override
 	public Map<String, Integer> getSymptoms()
-			throws FileNotFoundException, IOException
 	{
 		TreeMap<String, Integer> countedSymptoms = new TreeMap<String, Integer>();
 		Object[] fileContent = null;
 
-		BufferedReader fileReader = new BufferedReader(
-				new FileReader(fileName));
-
 		try
 		{
-			// gets file content as array of objects
-			fileContent = fileReader.lines().toArray();
+			BufferedReader fileReader = new BufferedReader(
+					new FileReader(fileName));
+
+			try
+			{
+				// gets file content as array of objects
+				fileContent = fileReader.lines().toArray();
+			}
+			finally
+			{
+				fileReader.close();
+			}
 		}
-		finally
+		catch (Exception exception) // catch FileReader instantiation Exception
 		{
-			fileReader.close();
+			System.out.print(exception);
 		}
 
 		if (fileContent == null)
