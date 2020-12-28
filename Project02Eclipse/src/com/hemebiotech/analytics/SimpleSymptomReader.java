@@ -11,9 +11,7 @@ import java.util.TreeMap;
  */
 public class SimpleSymptomReader implements ISymptomsReader
 {
-	/**
-	 * name of the file (with extention)
-	 */
+	/** name of the file to read (with extention) */
 	private String fileName;
 
 	public SimpleSymptomReader(String fileName)

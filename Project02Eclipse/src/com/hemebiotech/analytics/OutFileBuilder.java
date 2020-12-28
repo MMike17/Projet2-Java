@@ -10,13 +10,9 @@ import java.util.Map;
  */
 public class OutFileBuilder implements IFileBuilder
 {
-	/**
-	 * name of the file (with extention)
-	 */
+	/** name of the file to write (with extention) */
 	private String fileName;
-	/**
-	 * format of file lines
-	 */
+	/** format of file lines */
 	private String lineFormat;
 
 	public OutFileBuilder(String fileName, String lineFormat)
