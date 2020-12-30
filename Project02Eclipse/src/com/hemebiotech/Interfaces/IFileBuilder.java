@@ -4,6 +4,9 @@ import java.util.Map;
 
 /**
  * Interface used to build and write file
+ * 
+ * @see com.hemebiotech.analytics.AnalyticsCounter
+ * @author MikeMatthews
  */
 public interface IFileBuilder
 {

@@ -7,6 +7,10 @@ import java.util.Map;
 
 /**
  * Writes file with formatted data
+ * 
+ * @see com.hemebiotech.Interfaces.IFileBuilder
+ * @see com.hemebiotech.analytics.AnalyticsCounter
+ * @author MikeMatthews
  */
 public class OutFileBuilder implements IFileBuilder
 {
@@ -21,6 +25,11 @@ public class OutFileBuilder implements IFileBuilder
 		this.lineFormat = lineFormat;
 	}
 
+	/**
+	 * Writes Map of symptoms to file formated with the provided format
+	 * 
+	 * @see com.hemebiotech.Interfaces.IFileBuilder
+	 */
 	@Override
 	public void buildFile(Map<String, Integer> symptoms)
 	{
@@ -37,12 +46,15 @@ public class OutFileBuilder implements IFileBuilder
 	 * Writes file
 	 * 
 	 * @param fileContent content of the file to write
+	 * @see #buildFile
 	 */
 	void writeFile(String fileContent)
 	{
+		FileWriter writer = null;
+
 		try
 		{
-			FileWriter writer = new FileWriter(fileName);
+			writer = new FileWriter(fileName);
 
 			try
 			{
@@ -59,7 +71,7 @@ public class OutFileBuilder implements IFileBuilder
 		}
 		catch (Exception exception) // catch FileWriter instanciation Exception
 		{
-			System.out.print(exception);
+			exception.printStackTrace();
 		}
 	}
 }
